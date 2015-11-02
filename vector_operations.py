@@ -1,10 +1,12 @@
 from math import sqrt, acos, pi
 from decimal import Decimal, getcontext
 
-getcontext().prec=30
+getcontext().prec = 30
+
 
 class Vector(object):
     def __init__(self, coordinates):
+
         try:
             if not coordinates:
                 raise ValueError
@@ -23,15 +25,17 @@ class Vector(object):
 
 
     def __eq__(self, v):
+
         return self.coordinates == v.coordinates
 
     def __add__(self, other):
-        new_coordinates = [x + y for x, y in zip(self.coordinates, other.coordinates)]
 
+        new_coordinates = [x + y for x, y in zip(self.coordinates, other.coordinates)]
         return Vector(new_coordinates)
 
 
     def minus(self, v):
+
         new_coordinates = [x - y for x, y in zip(self.coordinates, v.coordinates)]
         return Vector(new_coordinates)
 
@@ -51,6 +55,7 @@ class Vector(object):
         return Decimal(sqrt(magnitude))
 
     def direction(self):
+
         return self.scalar_mult(1 / self.magnitude())
 
     def dot_product(self, other):
@@ -58,6 +63,7 @@ class Vector(object):
         return sum([x * y for x, y in zip(self.coordinates, other.coordinates)])
 
     def normalize(self):
+
         try:
             magnitude = self.magnitude()
             return self.scalar_mult(Decimal('1.0') / magnitude)
@@ -65,6 +71,7 @@ class Vector(object):
             raise Exception("Cannot normalize zero vero vector")
 
     def angle(self, other, degrees=False):
+
         pr1 = self.normalize()
         pr2 = other.normalize()
 
@@ -76,17 +83,18 @@ class Vector(object):
             return theta
 
     def isOrthoganal(self, other):
+
         return abs(self.dot_product(other)) < 1e-10
 
     def isParallel(self, other):
 
         return (self.is_zero()
-
                 or other.is_zero()
-                or self.angle(other)==0
-                or abs(self.angle(other)-pi )< 0.01)  #HACK could not get exact pi
+                or self.angle(other) == 0
+                or abs(self.angle(other) - pi) < 0.01)  # HACK could not get exact pi
 
     def is_zero(self, tolerance=1e-10):
+
         return self.magnitude() < tolerance
 
 # v=Vector([8.218, -9.341])
@@ -139,8 +147,6 @@ vectors_b = [
     Vector([-1.821, 1.072, -2.94])
 ]
 
-
-
-print vectors_a[0].isParallel(vectors_b[0])    , vectors_a[0].isOrthoganal(vectors_b[0])
+print vectors_a[0].isParallel(vectors_b[0]), vectors_a[0].isOrthoganal(vectors_b[0])
 print vectors_a[1].isParallel(vectors_b[1]), vectors_a[1].isOrthoganal(vectors_b[1])
 print vectors_a[2].isParallel(vectors_b[2]), vectors_a[2].isOrthoganal(vectors_b[2])
