@@ -42,7 +42,6 @@ class Vector(object):
 
     def scalar_mult(self, scalar):
         new_coord = [Decimal(scalar) * x for x in self.coordinates]
-
         return Vector(new_coord)
 
     def magnitude(self):
@@ -68,7 +67,7 @@ class Vector(object):
             magnitude = self.magnitude()
             return self.scalar_mult(Decimal('1.0') / magnitude)
         except ZeroDivisionError:
-            raise Exception("Cannot normalize zero vero vector")
+            raise Exception("Cannot normalize zero  vector")
 
     def angle(self, other, degrees=False):
 
@@ -96,6 +95,60 @@ class Vector(object):
     def is_zero(self, tolerance=1e-10):
 
         return self.magnitude() < tolerance
+
+    def parallel(self, basis):
+        u = basis.normalize()
+        weight = self.dot_product(u)
+        return u.scalar_mult(weight)
+
+    def orthogonal(self, other):
+        return self.minus(self.parallel(other))
+
+    def cross_product(self, other):
+        x=0
+        y=1
+        z=2
+        first_coordinate = (self.coordinates[y] * other.coordinates[z]) -(self.coordinates[z]*other.coordinates[y])
+        second_coordinate = -((self.coordinates[x] * other.coordinates[z]) -(self.coordinates[z]*other.coordinates[x]))
+        third_coordinate = (self.coordinates[x] * other.coordinates[y]) -(self.coordinates[y]*other.coordinates[x])
+
+        return Vector([first_coordinate, second_coordinate, third_coordinate])
+
+    def area_parallelogram(self, base):
+        cross = self.cross_product(base)
+        return cross.magnitude()
+
+    def area_triangle(self, base):
+        return self.area_parallelogram(base)/2
+
+
+
+v1 = Vector([8.462, 7.893, -8.187])
+v2 = Vector([-8.987, -9.838, 5.031])
+v3 = Vector([1.5, 9.547, 3.691])
+
+b1 = Vector([6.984, -5.975, 4.778])
+b2 = Vector([-4.268, -1.861, -8.866])
+b3 = Vector([-6.007, 0.124, 5.772])
+
+
+print(v1.cross_product(b1))
+print(v2.area_parallelogram(b2))
+print(v3.area_triangle(b3))
+# v1 = Vector([3.039, 1.879])
+# v2 = Vector([-9.88, -3.264, -8.159])
+# v3 = Vector([3.009, -6.172, 3.692, -2.51])
+#
+# b1 = Vector([0.825, 2.036])
+# b2 = Vector([-2.155, -9.353, -9.473])
+# b3 = Vector([6.404, -9.144, 2.759, 8.718])
+#
+# print(v1.parallel(b1))
+# print(v2.orthogonal(b2))
+#
+# print(v3.orthogonal(b3))
+# print(v3.parallel(b3))
+
 
 # v=Vector([8.218, -9.341])
 # w=Vector([-1.129, 2.111])
@@ -135,18 +188,18 @@ class Vector(object):
 #
 # h = Vector([2.751, 8.259, 3.985])
 # print g.angle(h, True)
-
-vectors_a = [
-    Vector([-7.579, -7.88]),
-    Vector([-2.029, 9.97, 4.172]),
-    Vector([-2.328, -7.284, -1.214])
-]
-vectors_b = [
-    Vector([22.373, 23.64]),
-    Vector([-9.231, -6.639, -7.245]),
-    Vector([-1.821, 1.072, -2.94])
-]
-
-print vectors_a[0].isParallel(vectors_b[0]), vectors_a[0].isOrthoganal(vectors_b[0])
-print vectors_a[1].isParallel(vectors_b[1]), vectors_a[1].isOrthoganal(vectors_b[1])
-print vectors_a[2].isParallel(vectors_b[2]), vectors_a[2].isOrthoganal(vectors_b[2])
+#
+# vectors_a = [
+# Vector([-7.579, -7.88]),
+# Vector([-2.029, 9.97, 4.172]),
+#     Vector([-2.328, -7.284, -1.214])
+# ]
+# vectors_b = [
+#     Vector([22.373, 23.64]),
+#     Vector([-9.231, -6.639, -7.245]),
+#     Vector([-1.821, 1.072, -2.94])
+# ]
+#
+# print vectors_a[0].isParallel(vectors_b[0]), vectors_a[0].isOrthoganal(vectors_b[0])
+# print vectors_a[1].isParallel(vectors_b[1]), vectors_a[1].isOrthoganal(vectors_b[1])
+# print vectors_a[2].isParallel(vectors_b[2]), vectors_a[2].isOrthoganal(vectors_b[2])
