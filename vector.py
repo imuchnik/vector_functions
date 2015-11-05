@@ -122,19 +122,19 @@ class Vector(object):
         return self.area_parallelogram(base)/2
 
 
-
-v1 = Vector([8.462, 7.893, -8.187])
-v2 = Vector([-8.987, -9.838, 5.031])
-v3 = Vector([1.5, 9.547, 3.691])
-
-b1 = Vector([6.984, -5.975, 4.778])
-b2 = Vector([-4.268, -1.861, -8.866])
-b3 = Vector([-6.007, 0.124, 5.772])
-
-
-print(v1.cross_product(b1))
-print(v2.area_parallelogram(b2))
-print(v3.area_triangle(b3))
+#
+# v1 = Vector([8.462, 7.893, -8.187])
+# v2 = Vector([-8.987, -9.838, 5.031])
+# v3 = Vector([1.5, 9.547, 3.691])
+#
+# b1 = Vector([6.984, -5.975, 4.778])
+# b2 = Vector([-4.268, -1.861, -8.866])
+# b3 = Vector([-6.007, 0.124, 5.772])
+#
+#
+# print(v1.cross_product(b1))
+# print(v2.area_parallelogram(b2))
+# print(v3.area_triangle(b3))
 # v1 = Vector([3.039, 1.879])
 # v2 = Vector([-9.88, -3.264, -8.159])
 # v3 = Vector([3.009, -6.172, 3.692, -2.51])
